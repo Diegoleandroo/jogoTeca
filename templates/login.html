@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Jogoteca</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}">
+</head>
+
+<body>
+    <div class="container">
+
+
+        <!-- código omitido -->
+
+        {% with messages = get_flashed_messages()
+        %}<!-- Cria uma variável chamada "messages" que recebe todas as mensagens temporárias enviadas pelo Flask com flash() -->
+        {% if messages %}<!-- Verifica se existe alguma mensagem (ou seja, se a lista não está vazia) -->
+        <ul id="messages" class="list-unstyled">
+            <!-- Cria uma lista HTML para exibir as mensagens (sem marcadores de lista) -->
+            {% for message in messages
+            %}<!-- Inicia um loop que percorre cada mensagem dentro da variável "messages" -->
+            <li class="alert alert-success">{{ message }}</li>
+            <!-- Mostra cada mensagem dentro de um item da lista com o estilo "alerta de sucesso" do Bootstrap -->
+            {% endfor %}<!--  Fim do loop que percorre as mensagens -->
+        </ul><!-- Fecha a lista -->
+        {% endif %}<!-- Fim da verificação (só mostra se houver mensagens) -->
+        {% endwith %}<!-- Fim do bloco "with", ou seja, termina o uso da variável temporária "messages" -->
+
+        <!-- código omitido -->
+
+
+        <h1>Faça seu login</h1>
+        <form method="POST" action="{{ url_for('autenticar') }}">
+            <!-- action -> Envia para o endereço autenticar-->
+            <input type="hidden" name="proxima" value="{{ proxima }}">
+            {{ form.csrf_token() }}
+            <div class="form-group">
+                {{ form.nickname.label(class="form-label") }}
+                {{ form.nickname(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.senha.label(class="form-label") }}
+                {{ form.senha(class="form-control") }}
+            </div>
+
+            <div class="form-group buttons">
+                {{ form.login(class="btn btn-primary") }}
+                <a class="btn btn-danger" href="{{ url_for('index') }}">Voltar</a>
+            </div>
+           
+        </form>
+       
+
+    </div>
+</body>
+
+</html>
